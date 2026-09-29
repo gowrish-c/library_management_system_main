@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block title %}Admin Dashboard{% endblock %}
+{% block content %}<h1 class="page-title">Admin Dashboard</h1><p class="page-subtitle">System-wide live overview</p>
+<div id="dashboard-live" data-live-url="{{ url_for('api_dashboard') }}"></div>
+<div class="quick-links"><a href="{{ url_for('add_book') }}" class="btn btn-primary">+ Add Book</a><a href="{{ url_for('librarians') }}" class="btn btn-secondary">Manage Librarians</a><a href="{{ url_for('students') }}" class="btn btn-secondary">Manage Students</a><a href="{{ url_for('issue_book') }}" class="btn btn-secondary">Issue a Book</a></div>{% endblock %}

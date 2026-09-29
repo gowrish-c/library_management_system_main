@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Manage Students{% endblock %}
+{% block content %}
+<h1 class="page-title">Manage Students</h1>
+<p class="page-subtitle">{{ students|length }} student account(s)</p>
+
+<div class="two-col">
+    <section class="panel">
+        <h2>Student Accounts</h2>
+        {% if students %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Joined</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in students %}
+                <tr>
+                    <td>{{ s.full_name }}</td>
+                    <td>{{ s.username }}</td>
+                    <td>{{ s.email or '—' }}</td>
+                    <td>{{ s.created_at }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('delete_student', user_id=s.id) }}"
+                              onsubmit="return confirm('Remove this student account?');" class="inline-form">
+                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="empty-state">No student accounts yet.</p>
+        {% endif %}
+    </section>
+
+    <section class="panel form-panel">
+        <h2>Add Student</h2>
+        <form method="POST" action="{{ url_for('students') }}">
+            <div class="form-group">
+                <label for="full_name">Full Name *</label>
+                <input type="text" id="full_name" name="full_name" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username *</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password *</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+        </form>
+    </section>
+</div>
+{% endblock %}

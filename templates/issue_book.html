@@ -1,0 +1,10 @@
+{% extends 'base.html' %}{% block title %}Issue Book{% endblock %}
+{% block content %}<h1 class="page-title">Issue a Book</h1>
+<div class="form-card"><form method="POST" action="{{ url_for('issue_book') }}" data-ajax="true" data-refresh="dashboard,books">
+{% if books and students %}
+<div class="form-group"><label>Book *</label><select name="book_id" required id="issue-book-select"><option value="">Select a book</option>{% for b in books %}<option value="{{ b.id }}">{{ b.title }} — {{ b.author }} ({{ b.available_copies }} available)</option>{% endfor %}</select></div>
+<div class="form-group"><label>Student *</label><select name="student_id" required><option value="">Select a student</option>{% for s in students %}<option value="{{ s.id }}">{{ s.full_name }} ({{ s.username }})</option>{% endfor %}</select></div>
+<div class="form-group"><label>Loan Period (days)</label><input type="number" name="days" value="{{ default_days }}" min="1"></div>
+<div class="form-actions"><button class="btn btn-primary">Issue Book</button><a href="{{ url_for('dashboard') }}" class="btn btn-outline">Cancel</a></div>
+{% else %}<p class="empty-state">{% if not books %}No copies are currently available.{% else %}No student accounts exist.{% endif %}</p>{% endif %}
+</form></div>{% endblock %}

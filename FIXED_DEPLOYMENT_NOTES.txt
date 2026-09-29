@@ -1,0 +1,12 @@
+FINAL VERSION
+
+Database: Neon Serverless Postgres
+Hosting: Vercel
+Entry point: api/index.py
+Live updates: AJAX + 1.5 second polling
+Student request -> librarian/admin approve/reject -> approval creates issue
+Student can cancel pending request
+No manual SQL table creation required; db.create_all() runs automatically.
+Prepared statements disabled and SQLAlchemy NullPool used for serverless/PgBouncer-safe connections.
+Favicon endpoints return 204 to avoid browser noise.
+Health check: /health

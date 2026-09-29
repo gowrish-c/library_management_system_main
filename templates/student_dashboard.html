@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block title %}Student Dashboard{% endblock %}
+{% block content %}<h1 class="page-title">My Dashboard</h1><p class="page-subtitle">Your books and requests update automatically.</p>
+<div id="dashboard-live" data-live-url="{{ url_for('api_dashboard') }}"></div>
+<div class="quick-links"><a href="{{ url_for('books') }}" class="btn btn-primary">Browse Catalog</a><a href="{{ url_for('my_books') }}" class="btn btn-secondary">View My Books</a></div>{% endblock %}

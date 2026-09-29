@@ -1,0 +1,30 @@
+<div class="live-status">● Live data</div>
+{% if books %}
+<table class="data-table">
+<thead><tr><th>Title</th><th>Author</th><th>Category</th><th>ISBN</th><th>Available</th>{% if current_user.role in ['admin','librarian'] %}<th></th>{% elif current_user.role=='student' %}<th>Request</th>{% endif %}</tr></thead>
+<tbody>
+{% for book in books %}
+<tr>
+<td>{{ book.title }}</td><td>{{ book.author }}</td><td>{{ book.category or '—' }}</td><td>{{ book.isbn or '—' }}</td>
+<td>{% if book.available_copies > 0 %}<span class="badge badge-success">{{ book.available_copies }} / {{ book.quantity }}</span>{% else %}<span class="badge badge-danger">0 / {{ book.quantity }}</span>{% endif %}</td>
+{% if current_user.role in ['admin','librarian'] %}
+<td class="actions-cell">
+<a href="{{ url_for('edit_book', book_id=book.id) }}" class="btn btn-sm btn-outline">Edit</a>
+<form method="POST" action="{{ url_for('delete_book', book_id=book.id) }}" data-ajax="true" data-refresh="books"><button class="btn btn-sm btn-danger" data-confirm="Delete this book?">Delete</button></form>
+</td>
+{% elif current_user.role=='student' %}
+<td>
+{% set pending = book.book_requests|selectattr('student_id','equalto',current_user.id)|selectattr('status','equalto','pending')|list %}
+{% set active = book.issue_records|selectattr('student_id','equalto',current_user.id)|selectattr('status','equalto','issued')|list %}
+{% if active %}<span class="badge badge-info">Borrowed</span>
+{% elif pending %}<span class="badge badge-warning">Requested</span>
+{% else %}
+<form method="POST" action="{{ url_for('request_book', book_id=book.id) }}" data-ajax="true" data-refresh="books,dashboard">
+<button class="btn btn-sm btn-primary">Request</button></form>
+{% endif %}
+</td>
+{% endif %}
+</tr>
+{% endfor %}
+</tbody></table>
+{% else %}<p class="empty-state">No books found.</p>{% endif %}

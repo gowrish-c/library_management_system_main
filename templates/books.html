@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Books{% endblock %}
+{% block content %}
+<div class="page-header-row">
+  <div><h1 class="page-title">Book Catalog</h1><p class="page-subtitle">Updates appear automatically.</p></div>
+  {% if current_user.role in ['admin','librarian'] %}<a href="{{ url_for('add_book') }}" class="btn btn-primary">+ Add Book</a>{% endif %}
+</div>
+<form method="GET" action="{{ url_for('books') }}" class="search-form" id="book-search">
+  <input type="text" name="q" placeholder="Search by title, author, or ISBN..." value="{{ query }}">
+  <button type="submit" class="btn btn-secondary">Search</button>
+  {% if query %}<a href="{{ url_for('books') }}" class="btn btn-outline">Clear</a>{% endif %}
+</form>
+<section class="panel" id="books-live" data-live-url="{{ url_for('api_books') }}">
+  {% include '_books_table.html' %}
+</section>
+{% endblock %}

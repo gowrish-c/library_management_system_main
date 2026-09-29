@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block title %}Login - LibrarySys{% endblock %}
+{% block content %}<div class="auth-wrapper"><div class="auth-card"><h1 class="auth-title">📚 LibrarySys</h1><p class="auth-subtitle">Sign in to manage the library</p>
+<form method="POST" action="{{ url_for('login') }}"><div class="form-group"><label>Username</label><input type="text" name="username" required autofocus></div><div class="form-group"><label>Password</label><input type="password" name="password" required></div><button class="btn btn-primary btn-block">Log In</button></form>
+<div class="demo-accounts"><p><strong>Demo accounts</strong></p><ul><li>Admin — <code>admin</code> / <code>admin123</code></li><li>Librarian — <code>librarian1</code> / <code>librarian123</code></li><li>Student — <code>student1</code> / <code>student123</code></li></ul></div></div></div>{% endblock %}

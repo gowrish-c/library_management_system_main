@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block title %}Librarian Dashboard{% endblock %}
+{% block content %}<h1 class="page-title">Librarian Dashboard</h1><p class="page-subtitle">Live loans and student requests</p>
+<div id="dashboard-live" data-live-url="{{ url_for('api_dashboard') }}"></div>
+<div class="quick-links"><a href="{{ url_for('issue_book') }}" class="btn btn-primary">+ Issue a Book</a><a href="{{ url_for('add_book') }}" class="btn btn-secondary">+ Add Book</a><a href="{{ url_for('books') }}" class="btn btn-secondary">View Catalog</a></div>{% endblock %}
